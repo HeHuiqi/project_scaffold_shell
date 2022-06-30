@@ -6,7 +6,7 @@ if [ "${project_name}" == "" ]; then
     exit
 fi
 echo ${project_name}
-rm -rf  ${project_name}
+# rm -rf  ${project_name}
 
 proxy=$3
 set_proxy="-fsSL"
@@ -19,9 +19,41 @@ fi
 # 初始化项目
 mkdir ${project_name}
 cd ${project_name}
+
+# 添加git管理
+git init
+echo "node_modules
+.env
+coverage
+coverage.json
+typechain
+
+#Hardhat files
+cache
+artifacts
+
+node_modules
+.env
+coverage
+coverage.json
+typechain
+
+#Hardhat files
+cache
+artifacts
+# Subgraph
+./subgraph/generated
+./subgraph/build
+# Matchstick
+./subgraph/tests/.*" > .gitignore
+
+# 初始化node项目
 npm init -y
+
 curl ${set_proxy} https://raw.githubusercontent.com/HeHuiqi/subgraph_use/main/add_scripts.js > add_scripts.js
 node add_scripts.js
+
+# rm -rf add_scripts.js
 
 curl ${set_proxy} https://raw.githubusercontent.com/HeHuiqi/subgraph_use/main/hardhat.config.js > hardhat.config.js
 
@@ -41,9 +73,8 @@ mkdir docker
 mkdir docker/data
 curl ${set_proxy}  https://raw.githubusercontent.com/HeHuiqi/subgraph_use/main/docker/docker-compose.yml >  docker/docker-compose.yml
 
-npm install
 
-
+# 运行步骤
 start_step="
 # 启动eth节点
 npm run start
@@ -62,3 +93,13 @@ npm run create-local-subgraph-node && npm run deploy-local-subgraph-node
 
 "
 echo "# 执行命令步骤\n <pre>${start_step}</pre>" > README.md
+
+
+echo "请输入下面的命令，安装项目依赖 \n"
+echo "cd ${project_name} && npm install \n"
+
+# 安装依赖
+
+# npm install
+
+

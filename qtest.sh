@@ -4,3 +4,6 @@ echo "\033[46;35m \033[4m Remote Hello! \033[0m"
 
 project_name=Hello
 echo "\033[32m cd ${project_name} && npm install \033[0m"
+
+
+sh -c "$(curl --proxy http://127.0.0.1:4780 https://raw.githubusercontent.com/HeHuiqi/project_scaffold_shell/main/subgraph_scaffold.sh)" -p hello --proxy http://127.0.0.1:4780

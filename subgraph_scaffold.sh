@@ -1,3 +1,5 @@
+
+
 project_name=$1
 if [ "${project_name}" == "" ]; then
     echo "input a project name"
@@ -7,12 +9,14 @@ echo ${project_name}
 rm -rf  ${project_name}
 
 proxy=$3
+set_proxy="-fsSL"
 if [ "$2" == "--proxy"  ] && [ "${proxy}" != "" ];then
     set_proxy="--proxy ${proxy}"
 fi
-echo ${set_proxy}
-# 初始化项目
+# echo ${set_proxy}
 
+
+# 初始化项目
 mkdir ${project_name}
 cd ${project_name}
 npm init -y
@@ -36,3 +40,25 @@ curl ${set_proxy} https://raw.githubusercontent.com/HeHuiqi/subgraph_use/main/te
 mkdir docker
 mkdir docker/data
 curl ${set_proxy}  https://raw.githubusercontent.com/HeHuiqi/subgraph_use/main/docker/docker-compose.yml >  docker/docker-compose.yml
+
+npm install
+
+
+start_step="
+# 启动eth节点
+npm run start
+
+# 启动graph节点
+npm  run graph-local-node-start
+
+# 清除和停止
+npm run remove-local-subgraph-node
+npm run graph-local-node-stop
+
+# 部署
+npm run deploy
+npm run graph-local-codegen && npm run graph-local-build
+npm run create-local-subgraph-node && npm run deploy-local-subgraph-node
+
+"
+echo "# 执行命令步骤\n <pre>${start_step}</pre>" > README.md

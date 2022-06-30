@@ -97,7 +97,9 @@ echo "# 执行命令步骤\n <pre>${start_step}</pre>" > README.md
 
 echo "请输入下面的命令，安装项目依赖"
 
-echo "cd ${project_name} && npm install"
+echo "\033[35m cd ${project_name} && npm install \033[0m"
+
+
 
 # 安装依赖
 

@@ -91,6 +91,9 @@ npm run deploy
 npm run graph-local-codegen && npm run graph-local-build
 npm run create-local-subgraph-node && npm run deploy-local-subgraph-node
 
+# 执行单元测试
+npm run graph-test
+
 "
 echo "# 执行命令步骤\n <pre>${start_step}</pre>" > README.md
 
